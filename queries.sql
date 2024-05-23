@@ -54,6 +54,8 @@ SELECT * FROM reserve r INNER JOIN destiny d ON d.id = r.id_destiny;
 --- left ---
 SELECT * FROM users u LEFT JOIN reserve r ON r.id_user = u.id;
 
+--- right ---
+SELECT * FROM reserve r RIGHT JOIN users u ON u.id = r.id_user;
 
 
 
