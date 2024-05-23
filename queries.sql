@@ -85,7 +85,12 @@ SELECT name AS destiny, description,
 (SELECT COUNT(*) FROM reserve r WHERE r.id_destiny = d.id)
 AS total_reserves FROM destiny d ORDER BY total_reserve DESC;
 
+SELECT DISTINCT u.id, u.name FROM users u INNER JOIN reserve r ON r.id_user = u.id;
 
+SELECT u.id, u.name, r.id AS res_id, r.reserve_date
+FROM users u
+INNER JOIN reserve r ON r.id_user = u.id
+ORDER BY r.id ASC;
 
 
 --- selects generics ---
