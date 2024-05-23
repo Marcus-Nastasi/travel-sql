@@ -62,36 +62,46 @@ SELECT * FROM users u RIGHT JOIN reserve r ON r.id_user = u.id;
 
 --- selects count ---
 SELECT COUNT(id_user) FROM reserve;
-SELECT COUNT(*) FROM reserve WHERE id_user = users.id;
 SELECT id, name, (SELECT COUNT(*) FROM reserve r WHERE r.id_user = u.id) AS total_reserve FROM users u;
 
+---
 SELECT id, id_user, id_destiny, reserve_date, status,
 (SELECT COUNT(*) FROM destiny d WHERE d.id = r.id_destiny)
 AS total_destinys FROM reserve r;
 
-SELECT id_user, (SELECT COUNT(*) FROM destiny d WHERE d.id = r.id_destiny) FROM reserve r;
 SELECT DISTINCT id_user, (SELECT COUNT(*) FROM destiny d WHERE d.id = r.id_destiny) AS total_destinys FROM reserve r;
 SELECT id, name, (SELECT COUNT(*) FROM reserve r WHERE r.id_user = u.id) AS total_reserves FROM users u;
 
+---
 SELECT id, name AS destiny, description,
 (SELECT COUNT(*) FROM reserve r WHERE r.id_destiny = d.id)
 AS total_reserves FROM destiny d;
 
+---
 SELECT name AS destiny, description,
 (SELECT COUNT(*) FROM reserve r WHERE r.id_destiny = d.id)
 AS total_reserves FROM destiny d ORDER BY d.id ASC;
 
+---
 SELECT name AS destiny, description,
 (SELECT COUNT(*) FROM reserve r WHERE r.id_destiny = d.id)
 AS total_reserves FROM destiny d ORDER BY total_reserve DESC;
 
 SELECT DISTINCT u.id, u.name FROM users u INNER JOIN reserve r ON r.id_user = u.id;
 
+---
 SELECT u.id, u.name, r.id AS res_id, r.reserve_date
 FROM users u
 INNER JOIN reserve r ON r.id_user = u.id
 ORDER BY r.id ASC;
 
+---
+SELECT d.id, d.name AS destiny, description, r.id, r.reserve_date FROM destiny d
+INNER JOIN reserve r ON r.id_destiny = d.id
+ORDER BY r.id ASC;
+
+---
+SELECT d.id AS id_destiny, (SELECT COUNT(*) FROM reserve r WHERE r.id_destiny = d.id) AS occurrences FROM destiny d;
 
 --- selects generics ---
 SELECT * FROM users WHERE id NOT IN (SELECT id_user FROM reserve);
