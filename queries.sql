@@ -56,6 +56,7 @@ SELECT * FROM users u LEFT JOIN reserve r ON r.id_user = u.id;
 
 --- right ---
 SELECT * FROM reserve r RIGHT JOIN users u ON u.id = r.id_user;
+SELECT * FROM users u RIGHT JOIN reserve r ON r.id_user = u.id;
 
 
 
