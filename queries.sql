@@ -6,6 +6,8 @@ CREATE TABLE users(
     birth DATE NOT NULL
 );
 
+ALTER TABLE users MODIFY COLUMN email VARCHAR(255) UNIQUE NOT NULL;
+
 CREATE TABLE destiny(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
@@ -43,7 +45,7 @@ INSERT INTO reserve(id_user, id_destiny, reserve_date, status) VALUES (1, 3, '20
 INSERT INTO reserve(id_user, id_destiny, reserve_date, status) VALUES (3, 5, '2024-06-12', 'canceled');
 INSERT INTO reserve(id_user, id_destiny, reserve_date, status) VALUES (4, 2, '2024-07-01', 'confirmed');
 INSERT INTO reserve(id_user, id_destiny, reserve_date, status) VALUES (5, 1, '2024-06-22', 'pending');
-
+INSERT INTO reserve(id_user, id_destiny, reserve_date, status) VALUES (1, 2, '2024-06-22', 'pending');
 
 --- JOINS ---
 --- inner ---
@@ -57,6 +59,18 @@ SELECT * FROM users u LEFT JOIN reserve r ON r.id_user = u.id;
 --- right ---
 SELECT * FROM reserve r RIGHT JOIN users u ON u.id = r.id_user;
 SELECT * FROM users u RIGHT JOIN reserve r ON r.id_user = u.id;
+
+--- selects count ---
+SELECT COUNT(id_user) FROM reserve;
+SELECT COUNT(*) FROM reserve WHERE id_user = users.id;
+SELECT id, name, (SELECT COUNT(*) FROM reserve r WHERE r.id_user = u.id) AS total_reserve FROM users u;
+SELECT id, id_user, id_destiny, reserve_date, status, (SELECT COUNT(*) FROM destiny d WHERE d.id = r.id_destiny) AS total_destinys FROM reserve r;
+SELECT id_user, (SELECT COUNT(*) FROM destiny d WHERE d.id = r.id_destiny) FROM reserve r;
+SELECT DISTINCT id_user, (SELECT COUNT(*) FROM destiny d WHERE d.id = r.id_destiny) AS total_destinys FROM reserve r;
+SELECT id, name, (SELECT COUNT(*) FROM reserve r WHERE r.id_user = u.id) AS total_reserves FROM users u;
+
+--- selects generics ---
+SELECT * FROM users WHERE id NOT IN (SELECT id_user FROM reserve);
 
 
 
