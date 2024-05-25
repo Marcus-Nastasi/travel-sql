@@ -56,6 +56,10 @@ SELECT * FROM reserve r INNER JOIN destiny d ON d.id = r.id_destiny;
 --- left ---
 SELECT * FROM users u LEFT JOIN reserve r ON r.id_user = u.id;
 
+SELECT u.id, u.name, u.email,
+(SELECT COUNT(*) FROM reserve r WHERE r.id_user = u.id) AS number_of_reserves, r.status, r.reserve_date
+FROM users u LEFT JOIN reserve r ON r.id_user = u.id;
+
 --- right ---
 SELECT * FROM reserve r RIGHT JOIN users u ON u.id = r.id_user;
 SELECT * FROM users u RIGHT JOIN reserve r ON r.id_user = u.id;
