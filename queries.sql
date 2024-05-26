@@ -53,6 +53,11 @@ SELECT * FROM users u INNER JOIN reserve r ON r.id_user = u.id;
 SELECT * FROM users u INNER JOIN reserve r ON r.id_user = u.id INNER JOIN destiny d ON d.id = r.id_destiny;
 SELECT * FROM reserve r INNER JOIN destiny d ON d.id = r.id_destiny;
 
+SELECT u.id, u.name, r.id, d.id, d.name FROM users u
+INNER JOIN reserve r ON r.id_user = u.id
+INNER JOIN destiny d ON d.id = r.id_destiny
+ORDER BY u.id ASC;
+
 --- left ---
 SELECT * FROM users u LEFT JOIN reserve r ON r.id_user = u.id;
 
